@@ -21,6 +21,15 @@ public static class HandleNotFound
         // TODO: Parse the response JSON
         // TODO: Assert that "meals" field is null (not found)
 
-        throw new NotImplementedException();
+        var response = await client.GetAsync("https://themealdb.com/api/json/v1/1/lookup.php?i=999999");
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            throw new Exception("Assertion failed: Status code is not 200 OK");
+
+        var body = await response.Content.ReadAsStringAsync();
+        using var doc = System.Text.Json.JsonDocument.Parse(body);
+
+        var mealsProp = doc.RootElement.GetProperty("meals");
+        if (mealsProp.ValueKind != System.Text.Json.JsonValueKind.Null)
+            throw new Exception("Assertion failed: meals field is not null");
     }
 }
