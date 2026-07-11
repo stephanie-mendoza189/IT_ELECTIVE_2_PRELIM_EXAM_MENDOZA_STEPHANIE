@@ -16,6 +16,8 @@ public static class DeleteReview
         // TODO: Send DELETE request to https://jsonplaceholder.typicode.com/posts/1
         // TODO: Assert status code is 200 OK
 
-        throw new NotImplementedException();
+        var response = await client.DeleteAsync("https://jsonplaceholder.typicode.com/posts/1");
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            throw new Exception("Assertion failed: Status code is not 200 OK");
     }
 }
