@@ -19,6 +19,7 @@ public static class GetCategories
         // TODO: Parse the response JSON
         // TODO: Assert the "categories" array has more than 0 items
 
-        throw new NotImplementedException();
+        var response = await client.GetAsync("https://themealdb.com/api/json/v1/1/categories.php");
+        
     }
 }
