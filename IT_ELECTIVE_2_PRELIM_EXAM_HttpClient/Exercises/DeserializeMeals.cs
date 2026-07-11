@@ -32,6 +32,21 @@ public static class DeserializeMeals
         // TODO: Assert the array has more than 0 items
         // TODO: Loop through and print each meal's strMeal
 
-        throw new NotImplementedException();
+        var response = await client.GetAsync("https://themealdb.com/api/json/v1/1/search.php?f=a");
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            throw new Exception("Assertion failed: Status code is not 200 OK");
+
+        var body = await response.Content.ReadAsStringAsync();
+        using var doc = System.Text.Json.JsonDocument.Parse(body);
+
+        var mealsProp = doc.RootElement.GetProperty("meals");
+        if (mealsProp.ValueKind == System.Text.Json.JsonValueKind.Null || mealsProp.GetArrayLength() <= 0)
+            throw new Exception("Assertion failed: meals array has 0 or fewer items");
+
+        foreach (var meal in mealsProp.EnumerateArray())
+        {
+            var mealName = meal.GetProperty("strMeal").GetString();
+            Console.WriteLine(mealName);
+        }
     }
 }
