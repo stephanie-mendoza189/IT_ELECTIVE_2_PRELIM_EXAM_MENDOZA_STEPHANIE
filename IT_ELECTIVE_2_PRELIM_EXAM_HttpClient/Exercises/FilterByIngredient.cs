@@ -19,6 +19,14 @@ public static class FilterByIngredient
         // TODO: Parse the response JSON
         // TODO: Assert the "meals" array has at least 1 item
 
+        var response = await client.GetAsync("https://themealdb.com/api/json/v1/1/filter.php?i=chicken_breast");
+
+
+
+
+
+
+
         throw new NotImplementedException();
     }
 }
