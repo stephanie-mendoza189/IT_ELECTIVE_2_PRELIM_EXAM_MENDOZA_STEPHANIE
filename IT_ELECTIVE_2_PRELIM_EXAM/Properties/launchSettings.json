@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "IT_ELECTIVE_2_PRELIM_EXAM": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    }
+  }
+}
