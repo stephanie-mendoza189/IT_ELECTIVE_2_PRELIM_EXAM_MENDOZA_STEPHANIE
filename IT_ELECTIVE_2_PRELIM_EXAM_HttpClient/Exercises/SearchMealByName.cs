@@ -20,6 +20,17 @@ public static class SearchMealByName
         // TODO: Parse the response JSON
         // TODO: Assert that the "meals" array is not null and has at least 1 item
 
-        throw new NotImplementedException();
+        var response = await client.GetAsync("https://themealdb.com/api/json/v1/1/search.php?s=Arrabiata");
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            throw new Exception("Assertion failed: Status code is not 200 OK");
+
+        var body = await response.Content.ReadAsStringAsync();
+        using var doc = System.Text.Json.JsonDocument.Parse(body);
+
+        if (!doc.RootElement.TryGetProperty("meals", out var mealsProp) || mealsProp.ValueKind == System.Text.Json.JsonValueKind.Null)
+            throw new Exception("Assertion failed: meals array is null");
+
+        if (mealsProp.GetArrayLength() < 1)
+            throw new Exception("Assertion failed: meals array has less than 1 item");
     }
 }
