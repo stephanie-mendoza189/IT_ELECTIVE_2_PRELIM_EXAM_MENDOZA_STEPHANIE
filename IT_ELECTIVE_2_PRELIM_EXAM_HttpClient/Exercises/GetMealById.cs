@@ -30,6 +30,7 @@ public static class GetMealById
         var firstMeal = meals[0];
         var mealName = firstMeal.GetProperty("strMeal").GetString();
 
-        
+        if (mealName != "Arrabiata")
+            throw new Exception($"Assertion failed: Meal name is '{mealName}' instead of 'Arrabiata'");
     }
 }
