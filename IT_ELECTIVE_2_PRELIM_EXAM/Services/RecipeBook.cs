@@ -34,8 +34,6 @@ public class RecipeBook
     // Currently this stub doesn't chain - fix it!
     public RecipeBook(string name) : this(name, 10)
     {
-        Name = name;
-        meals = new List<Meal>();
     }
 
     public void AddMeal(Meal meal)
@@ -65,7 +63,7 @@ public class RecipeBook
     // Currently this stub returns empty - fix it!
     public List<Meal> Search(int maxPrepTime)
     {
-        return meals.Where(m => m.Name.Contains("", StringComparison.OrdinalIgnoreCase)).ToList();
+        return new List<Meal>();
     }
 
     public int GetMealCount()
