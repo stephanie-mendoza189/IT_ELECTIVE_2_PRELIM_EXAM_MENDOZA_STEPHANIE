@@ -20,6 +20,14 @@ public static class GetCategories
         // TODO: Assert the "categories" array has more than 0 items
 
         var response = await client.GetAsync("https://themealdb.com/api/json/v1/1/categories.php");
-        
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            throw new Exception("Assertion failed: Status code is not 200 OK");
+
+        var body = await response.Content.ReadAsStringAsync();
+        using var doc = System.Text.Json.JsonDocument.Parse(body);
+
+        var categoriesProp = doc.RootElement.GetProperty("categories");
+        if (categoriesProp.GetArrayLength() <= 0)
+            throw new Exception("Assertion failed: categories array has 0 or fewer items");
     }
 }

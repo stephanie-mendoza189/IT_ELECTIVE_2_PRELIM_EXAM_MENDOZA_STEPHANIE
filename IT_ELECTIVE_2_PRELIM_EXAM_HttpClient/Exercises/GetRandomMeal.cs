@@ -25,6 +25,8 @@ public static class GetRandomMeal
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             throw new Exception($"Assertion failed: Status code is {(int)response.StatusCode} instead of 200");
 
-        
+        var body = await response.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(body))
+            throw new Exception("Assertion failed: Response body is null or empty");
     }
 }
