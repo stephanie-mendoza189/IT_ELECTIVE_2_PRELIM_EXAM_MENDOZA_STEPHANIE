@@ -23,6 +23,24 @@ public static class UpdateReview
         // TODO: Parse the response JSON
         // TODO: Assert the title is "Updated Review"
 
+
+
+        string json = "{\"title\": \"Great Pasta!\", \"body\": \"Loved this recipe\", \"userId\": 1}";
+        using var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+        var response = await client.PostAsync("https://jsonplaceholder.typicode.com/posts/1", content);
+        if (response.StatusCode != System.Net.HttpStatusCode.Created)
+            throw new Exception($"Assertion failed: Status code is not 201 Created. Got: {response.StatusCode}");
+
+        var body = await response.Content.ReadAsStringAsync();
+        using var doc = System.Text.Json.JsonDocument.Parse(body);
+
+
+
+
+
+
+
         throw new NotImplementedException();
     }
 }
