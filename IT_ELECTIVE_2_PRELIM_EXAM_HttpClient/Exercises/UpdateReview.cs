@@ -23,24 +23,18 @@ public static class UpdateReview
         // TODO: Parse the response JSON
         // TODO: Assert the title is "Updated Review"
 
-
-
-        string json = "{\"title\": \"Great Pasta!\", \"body\": \"Loved this recipe\", \"userId\": 1}";
+        string json = "{\"id\": 1, \"title\": \"Updated Review\", \"body\": \"Even better than before!\", \"userId\": 1}";
         using var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-        var response = await client.PostAsync("https://jsonplaceholder.typicode.com/posts/1", content);
-        if (response.StatusCode != System.Net.HttpStatusCode.Created)
-            throw new Exception($"Assertion failed: Status code is not 201 Created. Got: {response.StatusCode}");
+        var response = await client.PutAsync("https://jsonplaceholder.typicode.com/posts/1", content);
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            throw new Exception("Assertion failed: Status code is not 200 OK");
 
         var body = await response.Content.ReadAsStringAsync();
         using var doc = System.Text.Json.JsonDocument.Parse(body);
 
-
-
-
-
-
-
-        throw new NotImplementedException();
+        var title = doc.RootElement.GetProperty("title").GetString();
+        if (title != "Updated Review")
+            throw new Exception($"Assertion failed: Title is '{title}' instead of 'Updated Review'");
     }
 }
